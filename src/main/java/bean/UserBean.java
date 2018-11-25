@@ -2,12 +2,12 @@ package bean;
 
 
 /**
-用于记录用户的bean
+ * 用于记录用户的bean
  */
 public class UserBean {
-    private int userId;
-    private String userName;
-    private String userPassword;
+    private int userId;//用户id
+    private String userName;//用户名
+    private String userPassword;//密码md5值
 
     public int getUserId() {
         return userId;

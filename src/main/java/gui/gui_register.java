@@ -134,14 +134,18 @@ public class gui_register extends JFrame implements ActionListener {
             {
                 JOptionPane.showMessageDialog(null, "请输入验证码！", "提示", JOptionPane.ERROR_MESSAGE);
             }
-            if (username.length() < 1 && flag) {
-                JOptionPane.showMessageDialog(null, "用户名不能少于2位！", "提示", JOptionPane.ERROR_MESSAGE);
+
+            if(username.length() < 1 && flag)
+            {
+                JOptionPane.showMessageDialog(null, "用户名不能少于1位！", "提示",JOptionPane.ERROR_MESSAGE);
+
             }
             if (!psw1.equals(psw2) && username.length() >= 1 && flag) {
                 JOptionPane.showMessageDialog(null, " 两次密码不一致！", "提示", JOptionPane.ERROR_MESSAGE);
             }
-            if (psw1.length() < 1 && psw1.equals(psw2) && flag) {
-                JOptionPane.showMessageDialog(null, "密码不能少于8位！", "提示", JOptionPane.ERROR_MESSAGE);
+            if(psw1.length() < 1 && psw1.equals(psw2) && flag)
+            {
+                JOptionPane.showMessageDialog(null, "密码不能少于1位！", "提示",JOptionPane.ERROR_MESSAGE);
             }
 
             if (confirm_num.length() != 6 && flag && psw1.equals(psw2) && username.length() >= 1

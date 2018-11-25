@@ -6,6 +6,5 @@ public class Main {
     {
         config opt = new config();
         gui_login login = new gui_login();
-
     }
 }
