@@ -1,15 +1,15 @@
 package bean;
 
-/*
-用于记录车次
+/**
+ * 用于记录车次信息的bean
  */
 public class RunBean {
-    private int runId;
-    private String origin;
-    private String destination;
-    private String time;
-    private double price;
-    private int total;
+    private int runId; //车次
+    private String origin;//起点
+    private String destination;//终点
+    private String time;//发车时间
+    private double price;//车票价格
+    private int total;//总票数
 
     public int getRunId() {
         return runId;
