@@ -1,1 +1,5 @@
-"# ticketsystem_xdu" 
+ticketsystem_xdu
+java
+西电软院程序设计实训_自动售票系统
+弟弟课程
+copyright
