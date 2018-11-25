@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class weather {
+    /*
+    天气查询的api
+    string local ： 地点名称
+    */
     String result;
     public weather(String local) {
         String host = "http://weatherq.market.alicloudapi.com";

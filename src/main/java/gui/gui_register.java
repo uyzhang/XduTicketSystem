@@ -9,26 +9,26 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class gui_register extends JFrame implements ActionListener
-{
-    //主框体的label
+public class gui_register extends JFrame implements ActionListener {
+    // 主框体的label
     private JLabel name = new JLabel("   注册账号");
-    //账号框
+    // 账号框
     private JTextField id = new JTextField();
-    //密码框
+    // 密码框
     private JPasswordField pwd1 = new JPasswordField();
     private JPasswordField pwd2 = new JPasswordField();
-
+    // 电话框和验证码框
     private JTextField phone = new JTextField();
     private JTextField confirm = new JTextField();
-    //登录框的label
+
+    // label
     private JLabel l1 = new JLabel("账号:");
-    //密码框的label
     private JLabel l2 = new JLabel("输入密码:");
     private JLabel l3 = new JLabel("再次输入密码:");
     private JLabel l4 = new JLabel("手机号:");
     private JLabel l5 = new JLabel("验证码");
-    //登陆按钮
+
+    // 按钮
     private JButton register = new JButton("注册");
     private JButton back = new JButton("返回");
     private JButton confirm_ = new JButton("获取");
@@ -41,7 +41,6 @@ public class gui_register extends JFrame implements ActionListener
     private UserBean newuser = new UserBean();
     private String newpswmd5 = null;
     private UserDao check_user_exist = new UserDao();
-
 
     JFrame register_jf;
     Container container;
@@ -57,16 +56,16 @@ public class gui_register extends JFrame implements ActionListener
         register_jf = new JFrame("TicketSystem");
         container = register_jf.getContentPane();
 
-        //主框体icon设置
+        // 框体和组件icon及位置的设置
         ImageIcon chat_icon = new ImageIcon(opt.register);
         chat_icon.setImage(chat_icon.getImage().getScaledInstance(40, 40, 10));
-        //整个程序的图标设置
+
         ImageIcon chat1_icon = new ImageIcon(opt.chat);
         register_jf.setIconImage(chat1_icon.getImage().getScaledInstance(40, 40, 10));
-        //登录框icon设置
+
         ImageIcon login_icon = new ImageIcon(opt.login);
         login_icon.setImage(login_icon.getImage().getScaledInstance(25, 25, 10));
-        //密码框icon设置
+
         ImageIcon pwd_icon = new ImageIcon(opt.pwd);
         pwd_icon.setImage(pwd_icon.getImage().getScaledInstance(25, 25, 10));
 
@@ -96,16 +95,15 @@ public class gui_register extends JFrame implements ActionListener
         phone.setBounds(150, 210, 160, 30);
         confirm.setBounds(220, 255, 90, 30);
 
-//        login.addActionListener(this);
+        // 添加监听
         register.setBounds(150, 300, 60, 30);
         register.addActionListener(this);
         back.setBounds(250, 300, 60, 30);
         back.addActionListener(this);
         confirm_.setBounds(150, 255, 65, 30);
         confirm_.addActionListener(this);
-//        register.addActionListener(this);
 
-        //加入到主容器中
+        // 加入到主容器中
         container.add(name);
         container.add(l1);
         container.add(l2);
@@ -122,57 +120,53 @@ public class gui_register extends JFrame implements ActionListener
         container.add(confirm);
 
     }
-    public void actionPerformed (ActionEvent e )
-    {
-        //点击 注册
-        if(e.getSource() == register)
-        {
+
+    public void actionPerformed(ActionEvent e) {
+        // 点击 注册
+        if (e.getSource() == register) {
             username = id.getText();
             psw1 = String.valueOf(pwd1.getPassword());
             psw2 = String.valueOf(pwd2.getPassword());
             confirm_num = confirm.getText();
             phone_num = phone.getText();
 
-            if(!flag)  //
+            if (!flag) //
             {
-                JOptionPane.showMessageDialog(null, "请输入验证码！", "提示",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "请输入验证码！", "提示", JOptionPane.ERROR_MESSAGE);
             }
-            if(username.length() < 1 && flag)
-            {
-                JOptionPane.showMessageDialog(null, "用户名不能少于2位！", "提示",JOptionPane.ERROR_MESSAGE);
+            if (username.length() < 1 && flag) {
+                JOptionPane.showMessageDialog(null, "用户名不能少于2位！", "提示", JOptionPane.ERROR_MESSAGE);
             }
-            if(!psw1.equals(psw2) && username.length() >= 1 && flag)
-            {
-                JOptionPane.showMessageDialog(null, " 两次密码不一致！", "提示",JOptionPane.ERROR_MESSAGE);
+            if (!psw1.equals(psw2) && username.length() >= 1 && flag) {
+                JOptionPane.showMessageDialog(null, " 两次密码不一致！", "提示", JOptionPane.ERROR_MESSAGE);
             }
-            if(psw1.length() < 1 && psw1.equals(psw2) && flag)
-            {
-                JOptionPane.showMessageDialog(null, "密码不能少于8位！", "提示",JOptionPane.ERROR_MESSAGE);
+            if (psw1.length() < 1 && psw1.equals(psw2) && flag) {
+                JOptionPane.showMessageDialog(null, "密码不能少于8位！", "提示", JOptionPane.ERROR_MESSAGE);
             }
 
-            if(confirm_num.length() != 6 && flag && psw1.equals(psw2) && username.length() >= 1 && psw1.length() >= 1)
-            {
-                JOptionPane.showMessageDialog(null, "请输入正确的验证码！", "提示",JOptionPane.ERROR_MESSAGE);
+            if (confirm_num.length() != 6 && flag && psw1.equals(psw2) && username.length() >= 1
+                    && psw1.length() >= 1) {
+                JOptionPane.showMessageDialog(null, "请输入正确的验证码！", "提示", JOptionPane.ERROR_MESSAGE);
             }
 
-            if(confirm_num.length() == 6 && flag && psw1.equals(psw2) && username.length() >= 1 && psw2.length() >= 1 && !confirm_num.equals(confirm_data))
-            {
-                JOptionPane.showMessageDialog(null, "验证码错误", "提示",JOptionPane.ERROR_MESSAGE);
+            if (confirm_num.length() == 6 && flag && psw1.equals(psw2) && username.length() >= 1 && psw2.length() >= 1
+                    && !confirm_num.equals(confirm_data)) {
+                JOptionPane.showMessageDialog(null, "验证码错误", "提示", JOptionPane.ERROR_MESSAGE);
             }
 
-            if(confirm_num.length() == 6 && flag && psw1.equals(psw2) && username.length() >= 1 && psw2.length() >= 1 && confirm_num.equals(confirm_data) && check_user_exist.isExist(username))
-            {
-                JOptionPane.showMessageDialog(null, "该用户名已被注册", "提示",JOptionPane.ERROR_MESSAGE);
+            if (confirm_num.length() == 6 && flag && psw1.equals(psw2) && username.length() >= 1 && psw2.length() >= 1
+                    && confirm_num.equals(confirm_data) && check_user_exist.isExist(username)) {
+                JOptionPane.showMessageDialog(null, "该用户名已被注册", "提示", JOptionPane.ERROR_MESSAGE);
             }
 
-            //符合注册要求
-            if(confirm_num.length() == 6 && flag && psw1.equals(psw2) && username.length() >= 1 && psw2.length() >= 1 && confirm_num.equals(confirm_data) && !check_user_exist.isExist(username))
-            {
+            // 符合注册要求
+            if (confirm_num.length() == 6 && flag && psw1.equals(psw2) && username.length() >= 1 && psw2.length() >= 1
+                    && confirm_num.equals(confirm_data) && !check_user_exist.isExist(username)) {
 
-                try{
+                try {
                     newpswmd5 = Md5.EncoderByMd5(psw1);
 
-                }catch(Exception registeconfiem_e){
+                } catch (Exception registeconfiem_e) {
                     registeconfiem_e.printStackTrace();
                 }
                 newuser.setUserName(username);
@@ -181,15 +175,12 @@ public class gui_register extends JFrame implements ActionListener
                 try {
                     register_msg = check_user_exist.createUser(newuser);
 
-                    if(register_msg)
-                    {
-                        JOptionPane.showMessageDialog(null, "注册成功！", "提示",JOptionPane.ERROR_MESSAGE);
+                    if (register_msg) {
+                        JOptionPane.showMessageDialog(null, "注册成功！", "提示", JOptionPane.ERROR_MESSAGE);
                         register_jf.setVisible(false);
                         gui_use chat_jf = new gui_use(username);
-                    }
-                    else
-                    {
-                        JOptionPane.showMessageDialog(null, "注册失败", "提示",JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "注册失败", "提示", JOptionPane.ERROR_MESSAGE);
                     }
 
                 } catch (Exception ee) {
@@ -198,56 +189,50 @@ public class gui_register extends JFrame implements ActionListener
             }
 
         }
-        //点击 返回
-        if(e.getSource() == back)
-        {
+        // 点击 返回
+        if (e.getSource() == back) {
             register_jf.setVisible(false);
             login_jf = new gui_login();
         }
         // 点击 验证
-        if(e.getSource() == confirm_)
-        {
-            if(flag)
-            {
-                JOptionPane.showMessageDialog(null, "请不要重复验证！", "提示",JOptionPane.ERROR_MESSAGE);
+        if (e.getSource() == confirm_) {
+            if (flag) {
+                JOptionPane.showMessageDialog(null, "请不要重复验证！", "提示", JOptionPane.ERROR_MESSAGE);
             }
-                phone_num = phone.getText();
+            phone_num = phone.getText();
             // 验证 只需要 手机号
-            if(phone_num.length() != 11 && !flag)
-            {
-                JOptionPane.showMessageDialog(null, "请输入正确的11位手机号！", "提示",JOptionPane.ERROR_MESSAGE);
+            if (phone_num.length() != 11 && !flag) {
+                JOptionPane.showMessageDialog(null, "请输入正确的11位手机号！", "提示", JOptionPane.ERROR_MESSAGE);
             }
-            if(phone_num.length() == 11 && !flag)   //尚未进行验证
+            if (phone_num.length() == 11 && !flag) // 尚未进行验证
             {
-                //发送验证码
+                // 发送验证码
                 Random random = new Random();
-                confirm_data = String.valueOf(random.nextInt(899999) + 100000); //生成一个六位数随机数String  confirm_data
+                confirm_data = String.valueOf(random.nextInt(899999) + 100000); // 生成一个六位数随机数String confirm_data
                 System.out.println(confirm_data);
-                try{
-                    confirm confirm_r = new confirm(phone_num,confirm_data);
+                try {
+                    confirm confirm_r = new confirm(phone_num, confirm_data);
                     flag = true;
-                }catch (Exception confiem_e){
+                } catch (Exception confiem_e) {
                     confiem_e.printStackTrace();
                 }
             }
         }
     }
 
-    public void vis()
-    {
-        //空布局
+    public void vis() {
+        // 绝对布局
         container.setLayout(null);
-        //背景色
+        // 背景色
         container.setBackground(Color.white);
-        //主窗口是否可视化
+        // 主窗口是否可视化
         register_jf.setVisible(true);
-        //设置在屏幕中间弹出
+        // 设置在屏幕中间弹出
         register_jf.setLocation(500, 300);
-        //主窗口大小
+        // 主窗口大小
         register_jf.setSize(420, 400);
         System.out.println("注册窗口构建成功!");
-        //退出方式
-
+        // 退出方式
         register_jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 }

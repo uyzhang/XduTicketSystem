@@ -1,9 +1,10 @@
+/*** 配置类，主要存放文件地址
+ * 
+ */
 package gui;
 
 public class config
 {
-    String host = "127.0.0.1";
-    int port = 55512;
     String path = "src\\main\\java\\icon\\";
     String login = path + "login.png";
     String pwd = path + "pwd.png";
@@ -18,7 +19,6 @@ public class config
     String query = path + "查询.png";
     String time = path + "时间.png";
     String swap = path + "交换.png";
-//    String clear = path + "清除.png";
     String message = path + "消息.png";
     String refund = path + "退票.png";
     String money = path + "钱.png";
