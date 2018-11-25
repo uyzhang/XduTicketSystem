@@ -19,20 +19,20 @@ import java.util.ArrayList;
 
 public class gui_refund extends JFrame implements ActionListener {
     private boolean refundonce = false;
-    //主框体的label
+    // 主框体的label
     private JLabel name = new JLabel("  退票系统");
-    //返回的label
+    // 返回的label
     private JLabel l_quit = new JLabel("返回订票");
-    //取消的label
+    // 取消的label
     private JLabel l_refund = new JLabel("取消车票");
-
+    // 车票显示的组件的label
     private JLabel l_checkbox = new JLabel("订单号                  起始地                  目的地                  时间");
 
-    //查询按钮
+    // 车票显示的组件
     JCheckBox checkbox[];
-    //返回按钮
+    // 返回按钮
     private JButton quit = new JButton("返回");
-    //退票按钮
+    // 退票按钮
     private JButton refund = new JButton("退票");
 
     JFrame refund_jf;
@@ -41,28 +41,27 @@ public class gui_refund extends JFrame implements ActionListener {
     Container container;
     config opt = new config();
     String id;
-    ArrayList<TradeBean> queryTrade = new ArrayList<>();//我我我
+    ArrayList<TradeBean> queryTrade = new ArrayList<>();// 我我我
     ArrayList<RunBean> getRuns = new ArrayList<>();
     TradeBean tradeBean = new TradeBean();
     JPanel panel;
     RunDao rundao = new RunDao();
     TradeDao tradeDao = new TradeDao();
     int select_refund_ticket = 0;
-    int bought_ticket = 0;//以上
+    int bought_ticket = 0;// 以上
 
     public gui_refund(String s) {
         refund_jf = new JFrame("退票");
         container = refund_jf.getContentPane();
         id = s;
 
-
         JPanel panel = new JPanel(new GridLayout(bought_ticket, 1, 10, 10));
         panel.setBackground(Color.white);
-        //在文本框上添加滚动条
+        // 在文本框上添加滚动条
         JScrollPane jsp = new JScrollPane(panel);
-        //设置矩形大小.参数依次为(矩形左上角横坐标x,矩形左上角纵坐标y，矩形长度，矩形宽度)
+        // 设置矩形大小.参数依次为(矩形左上角横坐标x,矩形左上角纵坐标y，矩形长度，矩形宽度)
         jsp.setBounds(10, 50, 370, 200);
-        //默认的设置是超过文本框才会显示滚动条，以下设置让滚动条一直显示
+        // 默认的设置是超过文本框才会显示滚动条，以下设置让滚动条一直显示
         jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         panel.add(l_checkbox);
@@ -86,15 +85,13 @@ public class gui_refund extends JFrame implements ActionListener {
         l_refund.setBounds(20, 270, 85, 30);
         l_refund.setIcon(refund_icon);
 
-
         quit.setBounds(300, 270, 60, 30);
         quit.addActionListener(this);
         refund.setBounds(110, 270, 60, 30);
         refund.addActionListener(this);
 
-
-        //把滚动条添加到容器里面
-//        container.add(panel1);
+        // 把滚动条添加到容器里面
+        // container.add(panel1);
         container.add(name);
         container.add(l_quit);
         container.add(l_refund);
@@ -124,13 +121,11 @@ public class gui_refund extends JFrame implements ActionListener {
 
             int orders = 0;
 
-
-            for (int i = 0; i < bought_ticket; i++) {//在这里遍历所有checkbox，要是有多个被选择，则弹出警告框
+            for (int i = 0; i < bought_ticket; i++) {// 在这里遍历所有checkbox，要是有多个被选择，则弹出警告框
                 if (checkbox[i].isSelected()) {
                     select_refund_ticket++;
                     orders = i;
                 }
-
 
             }
             if (select_refund_ticket > 1) {
@@ -139,7 +134,7 @@ public class gui_refund extends JFrame implements ActionListener {
             if (select_refund_ticket < 1) {
                 JOptionPane.showMessageDialog(null, "请选择您要退的车票", "提示", JOptionPane.ERROR_MESSAGE);
             }
-            if (select_refund_ticket == 1) {//取得只有一个被选中的框的id，返回给数据库。
+            if (select_refund_ticket == 1) {// 取得只有一个被选中的框的id，返回给数据库。
 
                 tradeBean.setUserId(queryTrade.get(orders).getUserId());
                 tradeBean.setTradeId(queryTrade.get(orders).getTradeId());
@@ -151,7 +146,8 @@ public class gui_refund extends JFrame implements ActionListener {
                     tradeDao.cancelTrade(tradeBean);
                     tradeBean.setCanceled(tradeDao.cancelTrade(tradeBean));
                     refundonce = true;
-                    JOptionPane.showMessageDialog(null, "退票成功，请取走" + price + "元", "提示", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "退票成功，请取走" + price + "元", "提示",
+                            JOptionPane.INFORMATION_MESSAGE);
                 } else if (tradeBean.getCanceled() || refundonce) {
                     JOptionPane.showMessageDialog(null, "请不要重复退票", "提示", JOptionPane.ERROR_MESSAGE);
                 }
@@ -167,17 +163,18 @@ public class gui_refund extends JFrame implements ActionListener {
         checkbox = new JCheckBox[bought_ticket];
         for (int i = 0; i < bought_ticket; i++) {
             RunBean getRuns = run.getRun(queryTrade.get(i).getRunId());
-            //在这里调用从数据库查询的函数，获得日期。。。。，
-            //int userId=queryTrade.get(i).getUserId();
+            // 在这里调用从数据库查询的函数，获得日期。。。。，
+            // int userId=queryTrade.get(i).getUserId();
             int id = queryTrade.get(i).getTradeId();
-            //String id = "id";
+            // String id = "id";
             String begin = getRuns.getOrigin();
-            //String begin = "begin";
+            // String begin = "begin";
             String end = getRuns.getDestination();
-            //String end = "end";
+            // String end = "end";
             String time = getRuns.getTime();
-            //String time = "time";
-            checkbox[i] = new JCheckBox(id + "                  " + begin + "                  " + end + "                  " + time);
+            // String time = "time";
+            checkbox[i] = new JCheckBox(
+                    id + "                  " + begin + "                  " + end + "                  " + time);
             panel.add(checkbox[i]);
         }
         panel.validate();
@@ -185,4 +182,3 @@ public class gui_refund extends JFrame implements ActionListener {
         System.out.println("您所购买的车票如下");
     }
 }
-
