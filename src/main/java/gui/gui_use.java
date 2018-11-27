@@ -16,46 +16,48 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 import java.util.List;
 
-public class gui_use extends JFrame implements ActionListener
-{
-    //主框体的label
+public class gui_use extends JFrame implements ActionListener {
+    // 主框体的label
     private JLabel name = new JLabel("自动订票系统");
-    //始发地
+    // 始发地的文本框
     private JTextField begin = new JTextField();
-    //目的地
+    // 目的地的文本框
     private JTextField end = new JTextField();
-    //钱
+    // 钱的文本框
     private JTextField money = new JTextField();
-    //始发地的label
+    // 始发地的label
     private JLabel l_begin = new JLabel("始发地");
-    //目的地的label
+    // 目的地的label
     private JLabel l_end = new JLabel("目的地");
-    //查询的label
+    // 查询的label
     private JLabel l_query = new JLabel("查询车票");
-    //取消的label
+    // 取消的label
     private JLabel l_quit = new JLabel("取消购买");
-    //购买的label
+    // 购买的label
     private JLabel l_buy = new JLabel("购买车票");
-    //交换的label
+    // 交换的label
     private JLabel l_swap = new JLabel("");
-    //交换的label
+    // 交换的label
     private JLabel l_weather = new JLabel("");
-    //清空的label
+    // 清空的label
     private JLabel l_refund = new JLabel("取消车票");
-    //消息区
+    // 消息区
     private JLabel l_message = new JLabel("");
     private JLabel l_money = new JLabel("投入现金");
 
-    private JLabel l_checkbox = new JLabel("      车次                        发车时间                           价格                  余票");
-    //查询按钮
+    private JLabel l_checkbox = new JLabel(
+            "      车次                        发车时间                           价格                  余票");
+    // 查询按钮
     private JButton query = new JButton("查询");
-    //取消按钮
+    // 取消按钮
     private JButton quit = new JButton("取消");
-    //购票按钮
+    // 购票按钮
     private JButton buy = new JButton("购票");
     private JButton refund = new JButton("退票");
 
+    // 消息区
     JTextPane msgArea;
+    // 滑动边框
     JScrollPane textScrollPane;
 
     JFrame use_jf;
@@ -98,18 +100,16 @@ public class gui_use extends JFrame implements ActionListener
     //统计勾选的车票数
     int ticket_selected_count = 0;
 
-
-
-    public gui_use(String s)
-    {
+    public gui_use(String s) {
         use_jf = new JFrame("TicketSystem " + s);
         container = use_jf.getContentPane();
 
         username = s;
-        //主框体icon设置
+
+        // 框体和组件图标及位置的设置
         ImageIcon chat_icon = new ImageIcon(opt.chat);
         chat_icon.setImage(chat_icon.getImage().getScaledInstance(40, 40, 10));
-        //整个程序的图标设置
+        // 整个程序的图标设置
         use_jf.setIconImage(chat_icon.getImage().getScaledInstance(40, 40, 10));
 
         ImageIcon begin_icon = new ImageIcon(opt.begin);
@@ -142,9 +142,7 @@ public class gui_use extends JFrame implements ActionListener
         ImageIcon moneyicon = new ImageIcon(opt.money);
         moneyicon.setImage(moneyicon.getImage().getScaledInstance(25, 25, 10));
 
-        /////////////////
-        //各种位置的设定
-        name.setBounds(180,20,140,30);
+        name.setBounds(180, 20, 140, 30);
         name.setIcon(chat_icon);
 
         l_begin.setBounds(100, 70, 80, 30);
@@ -174,27 +172,23 @@ public class gui_use extends JFrame implements ActionListener
         l_money.setBounds(150, 150, 100, 30);
         l_money.setIcon(moneyicon);
 
-
-
-        //滚动选择栏
-        panel = new JPanel(new GridLayout(query_ticket_size,1, 10, 10));
+        // 滚动选择栏
+        panel = new JPanel(new GridLayout(query_ticket_size, 1, 10, 10));
         panel.setBackground(Color.white);
-        //在文本框上添加滚动条
+        // 在文本框上添加滚动条
         JScrollPane jsp = new JScrollPane(panel);
-        //设置矩形大小.参数依次为(矩形左上角横坐标x,矩形左上角纵坐标y，矩形长度，矩形宽度)
+        // 设置矩形大小.参数依次为(矩形左上角横坐标x,矩形左上角纵坐标y，矩形长度，矩形宽度)
         jsp.setBounds(50, 250, 400, 100);
-        //默认的设置是超过文本框才会显示滚动条，以下设置让滚动条一直显示
-        jsp.setVerticalScrollBarPolicy( JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        // 默认的设置是超过文本框才会显示滚动条，以下设置让滚动条一直显示
+        jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         panel.add(l_checkbox);
 
-
-
-        //文本框以及按钮的位置设定
         begin.setBounds(100, 100, 80, 30);
         end.setBounds(310, 100, 80, 30);
-        money.setBounds(260,150,80,30);
-
+        money.setBounds(260, 150, 80, 30);
+        
+        // 添加监听
         query.setBounds(125, 370, 80, 30);
         query.addActionListener(this);
         refund.setBounds(340, 370, 80, 30);
@@ -204,14 +198,15 @@ public class gui_use extends JFrame implements ActionListener
         quit.setBounds(340, 420, 80, 30);
         quit.addActionListener(this);
 
-        //信息显示区域
+        // 信息显示区域
         msgArea = new JTextPane();
 
+        // 滑动边框
         textScrollPane = new JScrollPane(msgArea);
-        textScrollPane.setBounds(100,190,300,50);
+        textScrollPane.setBounds(100, 190, 300, 50);
         textScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        //加入到主容器中
+        // 加入到主容器中
         container.add(name);
         container.add(l_begin);
         container.add(l_end);
@@ -232,31 +227,31 @@ public class gui_use extends JFrame implements ActionListener
 
         container.add(textScrollPane);
         container.add(jsp);
+        
+        // 可视化
         vis();
 
-        //有效地址的设定
-        for(int i = 0 ;i < arr_address.length ;i++){
+        // 有效地址的设定
+        for (int i = 0; i < arr_address.length; i++) {
             addresses.add(arr_address[i]);
         }
 
     }
-    
-    public void vis()
-    {
-        //空布局
+
+    public void vis() {
+        // 绝对布局
         container.setLayout(null);
-        //背景色
+        // 背景色
         container.setBackground(Color.white);
-        //主窗口是否可视化
+        // 主窗口是否可视化
         use_jf.setVisible(true);
         msgArea.setText("登陆成功，请购票！\n");
-        //设置在屏幕中间弹出
-        use_jf.setLocation(500,200);
-        //主窗口大小
-        use_jf.setSize(480,500);
+        // 设置在屏幕中间弹出
+        use_jf.setLocation(500, 200);
+        // 主窗口大小
+        use_jf.setSize(480, 500);
         System.out.println("订票窗口构建成功!");
-        //退出方式
-
+        // 退出方式
         use_jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
@@ -283,7 +278,7 @@ public class gui_use extends JFrame implements ActionListener
                 panel.validate();
                 //重绘panel
                 panel.repaint();
-            }catch(Exception query_e){
+            } catch (Exception query_e) {
                 System.out.println(query_e.toString());
             }
 
@@ -330,7 +325,7 @@ public class gui_use extends JFrame implements ActionListener
                     try {
                         //向msgArea中插入内容
                         querymsg.insertString(querymsg.getLength(), "查询 " + origin + " 到 " + dest + " 结果如下: \n", null);
-                        querymsg.insertString(querymsg.getLength(),"请勾选您所要购买的车票！\n",null);
+                        querymsg.insertString(querymsg.getLength(), "请勾选您所要购买的车票！\n", null);
 
                         //将 滚动条 滚至msgArea消息底部
                         msgArea.setCaretPosition(msgArea.getText().length());
@@ -353,7 +348,7 @@ public class gui_use extends JFrame implements ActionListener
                     l_weather.setIcon(weather_icon);
                     container.add(l_weather);
 
-                    //面板刷新
+                    // 面板刷新
                     container.validate();
                     container.repaint();
                     panel.validate();
@@ -445,7 +440,7 @@ public class gui_use extends JFrame implements ActionListener
                         if (moneyinput == null || moneyinput.length() <= 0) {
                             JOptionPane.showMessageDialog(null, "请输入有效金额！", "提示", JOptionPane.ERROR_MESSAGE);
                         }
-                        //判断String 的 moneyinput 是否为合格的 int 类型
+                        // 判断String 的 moneyinput 是否为合格的 int 类型
                         else if (moneyinput.matches("[1-9]\\d*")) {
                             //存储总金额
                             totlemoney = Integer.parseInt(moneyinput);
@@ -474,7 +469,8 @@ public class gui_use extends JFrame implements ActionListener
                                 if (createTradeSuccess) {
 
                                     try {
-                                        document.insertString(document.getLength(), "成功购买 第 " + queryRunBeans.get(ticket).getRunId() + " 次 列车\n", null);
+                                        document.insertString(document.getLength(),
+                                                "成功购买 第 " + queryRunBeans.get(ticket).getRunId() + " 次 列车\n", null);
 
                                     } catch (BadLocationException buy_msg_e) {
                                         buy_msg_e.printStackTrace();
@@ -578,7 +574,7 @@ public class gui_use extends JFrame implements ActionListener
                 panel.add(checkbox[i]);
             }
 
-            //刷新panel 窗口
+            // 刷新panel 窗口
             panel.validate();
             panel.repaint();
             System.out.println("查询库中该路线信息");
@@ -590,6 +586,5 @@ public class gui_use extends JFrame implements ActionListener
     {
         return addresses.contains(address);
     }
-
 
 }

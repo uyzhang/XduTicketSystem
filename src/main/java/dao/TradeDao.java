@@ -8,22 +8,31 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+/**
+ * 这个类实现了TradeDaoInterface接口
+ * 每个函数的具体作用在TradeDaoInterface中说明
+ * 遵循以下原则：
+ *     若返回的是列表，出错时，返回的列表长度为0
+ *     若返回值一个单一对象，返回空
+ */
 public class TradeDao implements TradeDaoInterface {
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
 
-
     public TradeDao() {
         connection = DBConnection.getConnection();
     }
 
-
-
-
+    /**
+     * 创建交易,成功返回true，失败返回false
+     * @param trade 需要创建的交易的信息
+     * @return true 交易成功，false 交易失败
+     */
     @Override
     public boolean createTrade(TradeBean trade) {
+
+        //首先检测用户是否存在
         String statement = "select * from users where  userid = ?";
         try {
             preparedStatement = connection.prepareStatement(statement);
@@ -36,6 +45,7 @@ public class TradeDao implements TradeDaoInterface {
             return false;
         }
 
+        //其次检测是否有对应车次
         statement = "select * from runs where runid = ?";
         try {
             preparedStatement = connection.prepareStatement(statement);
@@ -48,6 +58,7 @@ public class TradeDao implements TradeDaoInterface {
             return false;
         }
 
+        //检测都通过后，数据库中添加交易信息
         statement = "insert into trade (userid, runid, canceled) values (?, ?, 0)";
         try {
             preparedStatement = connection.prepareStatement(statement);
@@ -68,6 +79,12 @@ public class TradeDao implements TradeDaoInterface {
     }
 
 
+    /**
+     * 查询交易,若有错无或没有购票记录，则返回的列表长度为0
+     * @param userId 需要查询所有交易信息的用户id
+     * @return 对应用户的交易列表，
+     *         若查询错误或用户没有购票信息，返回的列表长度为0
+     */
     @Override
     public ArrayList<TradeBean> queryTrade(int userId) {
         ArrayList<TradeBean> tradeBeans = new ArrayList<>();
@@ -100,6 +117,13 @@ public class TradeDao implements TradeDaoInterface {
         return tradeBeans;
     }
 
+    /**
+     * 1.用户退票，取消订单,成功返回true，失败返回false
+     * 2.注意退票前，一定要检查所选中的trade  的 cancel 位是否为 0 ，不为0 ，请提示已经退票，
+     * 3.不满足2，不得调用此函数，否则会重复退票
+     * @param trade 需要取消的交易信息
+     * @return 是否退票成功 true false
+     */
     @Override
     public boolean cancelTrade(TradeBean trade) {
         String statement = "update trade set canceled = 1 where tradeid = ?";

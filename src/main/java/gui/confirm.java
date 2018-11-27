@@ -6,6 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class confirm {
+    /*
+    验证码类的构造函数，发送验证码到阿里云，通过阿里云api将验证码发送到手机上 
+    string data ： 手机号 
+    string a ： 验证码
+    */
     public confirm(String data, String a) // data 手机号 a 随机数
     {
         String host = "http://yzxyzm.market.alicloudapi.com";
@@ -33,6 +38,7 @@ public class confirm {
              * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/pom.xml
              */
             HttpResponse response = HttpUtils.doPost(host, path, method, headers, querys, bodys);
+            // 输出验证码
             System.out.println(response.toString());
             //获取response的body
             //System.out.println(EntityUtils.toString(response.getEntity()));

@@ -9,26 +9,26 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class gui_register extends JFrame implements ActionListener
-{
-    //主框体的label
+public class gui_register extends JFrame implements ActionListener {
+    // 主框体的label
     private JLabel name = new JLabel("   注册账号");
-    //账号框
+    // 账号框
     private JTextField id = new JTextField();
-    //密码框
+    // 密码框
     private JPasswordField pwd1 = new JPasswordField();
     private JPasswordField pwd2 = new JPasswordField();
-
+    // 电话框和验证码框
     private JTextField phone = new JTextField();
     private JTextField confirm = new JTextField();
-    //登录框的label
+
+    // label
     private JLabel l1 = new JLabel("账号:");
-    //密码框的label
     private JLabel l2 = new JLabel("输入密码:");
     private JLabel l3 = new JLabel("再次输入密码:");
     private JLabel l4 = new JLabel("手机号:");
     private JLabel l5 = new JLabel("验证码");
-    //登陆按钮
+
+    // 按钮
     private JButton register = new JButton("注册");
     private JButton back = new JButton("返回");
     private JButton confirm_ = new JButton("获取");
@@ -49,7 +49,6 @@ public class gui_register extends JFrame implements ActionListener
     //检查用户名是否存在
     private UserDao check_user_exist = new UserDao();
 
-
     JFrame register_jf;
     Container container;
     config opt = new config();
@@ -65,16 +64,16 @@ public class gui_register extends JFrame implements ActionListener
         register_jf = new JFrame("TicketSystem");
         container = register_jf.getContentPane();
 
-        //主框体icon设置
+        // 框体和组件icon及位置的设置
         ImageIcon chat_icon = new ImageIcon(opt.register);
         chat_icon.setImage(chat_icon.getImage().getScaledInstance(40, 40, 10));
-        //整个程序的图标设置
+
         ImageIcon chat1_icon = new ImageIcon(opt.chat);
         register_jf.setIconImage(chat1_icon.getImage().getScaledInstance(40, 40, 10));
-        //登录框icon设置
+
         ImageIcon login_icon = new ImageIcon(opt.login);
         login_icon.setImage(login_icon.getImage().getScaledInstance(25, 25, 10));
-        //密码框icon设置
+
         ImageIcon pwd_icon = new ImageIcon(opt.pwd);
         pwd_icon.setImage(pwd_icon.getImage().getScaledInstance(25, 25, 10));
 
@@ -104,16 +103,15 @@ public class gui_register extends JFrame implements ActionListener
         phone.setBounds(150, 210, 160, 30);
         confirm.setBounds(220, 255, 90, 30);
 
-//        login.addActionListener(this);
+        // 添加监听
         register.setBounds(150, 300, 60, 30);
         register.addActionListener(this);
         back.setBounds(250, 300, 60, 30);
         back.addActionListener(this);
         confirm_.setBounds(150, 255, 65, 30);
         confirm_.addActionListener(this);
-//        register.addActionListener(this);
 
-        //加入到主容器中
+        // 加入到主容器中
         container.add(name);
         container.add(l1);
         container.add(l2);
@@ -145,22 +143,26 @@ public class gui_register extends JFrame implements ActionListener
             confirm_num = confirm.getText();
             //获取输入的手机号
             phone_num = phone.getText();
+
             /**
              * flag为判断是否进行手机验证的标志
              * 当没有进行手机验证时进入if
              */
             if(!flag)  //
             {
-                JOptionPane.showMessageDialog(null, "请输入验证码！", "提示",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "请输入验证码！", "提示", JOptionPane.ERROR_MESSAGE);
             }
+
             /**
              * 判断用户名username的长度
              * 当用户名长度小于1时进入if
              */
             if(username.length() < 1 && flag)
             {
-                JOptionPane.showMessageDialog(null, "用户名不能少于2位！", "提示",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "用户名不能少于1位！", "提示",JOptionPane.ERROR_MESSAGE);
+
             }
+
             /**
              * 判断两次输入的密码psw1 psw2 是否一致
              * 当两次密码不一致时进入if
@@ -175,8 +177,9 @@ public class gui_register extends JFrame implements ActionListener
              */
             if(psw1.length() < 1 && psw1.equals(psw2) && flag)
             {
-                JOptionPane.showMessageDialog(null, "密码不能少于8位！", "提示",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "密码不能少于1位！", "提示",JOptionPane.ERROR_MESSAGE);
             }
+
             /**
              * 判断验证码 confirm_num 的长度是否为6位
              * 当验证码的长度非6位时进入if
@@ -194,7 +197,7 @@ public class gui_register extends JFrame implements ActionListener
             if(confirm_num.length() == 6 && flag && psw1.equals(psw2) && username.length() >= 1 && psw2.length() >= 1 && !confirm_num.equals(confirm_data))
             {
                 JOptionPane.showMessageDialog(null, "验证码错误", "提示",JOptionPane.ERROR_MESSAGE);
-            }
+
             /**
              * 判断该用户名是否已经存在
              * 使用UserDao 的 isExist(username)函数
@@ -203,10 +206,11 @@ public class gui_register extends JFrame implements ActionListener
              * //当用户名已经被占用时进入if
              */
 
-            if(confirm_num.length() == 6 && flag && psw1.equals(psw2) && username.length() >= 1 && psw2.length() >= 1 && confirm_num.equals(confirm_data) && check_user_exist.isExist(username))
-            {
-                JOptionPane.showMessageDialog(null, "该用户名已被注册", "提示",JOptionPane.ERROR_MESSAGE);
+            if (confirm_num.length() == 6 && flag && psw1.equals(psw2) && username.length() >= 1 && psw2.length() >= 1
+                    && confirm_num.equals(confirm_data) && check_user_exist.isExist(username)) {
+                JOptionPane.showMessageDialog(null, "该用户名已被注册", "提示", JOptionPane.ERROR_MESSAGE);
             }
+
 
             /**
              * 符合注册条件
@@ -224,7 +228,7 @@ public class gui_register extends JFrame implements ActionListener
                 try{
                     newpswmd5 = Md5.EncoderByMd5(psw1);
 
-                }catch(Exception registeconfiem_e){
+                } catch (Exception registeconfiem_e) {
                     registeconfiem_e.printStackTrace();
                 }
                 //设置newuser的用户名
@@ -239,6 +243,7 @@ public class gui_register extends JFrame implements ActionListener
                 try {
                     //向数据库中插入一条新的用户数据，register_msg接收返回值
                     register_msg = check_user_exist.createUser(newuser);
+
                     //register_msg = true; 向数据库中插入用户成功
                     if(register_msg)
                     {
@@ -248,6 +253,7 @@ public class gui_register extends JFrame implements ActionListener
                         register_jf.setVisible(false);
                         //新建购票窗口，传入该用户名
                         gui_use chat_jf = new gui_use(username);
+
                     }
                     //register_msg = false; 向数据库中插入用户失败
                     else
@@ -263,6 +269,7 @@ public class gui_register extends JFrame implements ActionListener
             }
 
         }
+
         //用户点击返回按钮
         if(e.getSource() == back)
         {
@@ -271,6 +278,7 @@ public class gui_register extends JFrame implements ActionListener
             //新建登陆窗口
             login_jf = new gui_login();
         }
+
         //用户点击验证按钮
         if(e.getSource() == confirm_)
         {
@@ -316,28 +324,26 @@ public class gui_register extends JFrame implements ActionListener
                     //手机验证失败，抛出异常，flag仍为false
                     //手机验证成功，将flag设为true
                     flag = true;
-                }catch (Exception confiem_e){
+                } catch (Exception confiem_e) {
                     confiem_e.printStackTrace();
                 }
             }
         }
     }
 
-    public void vis()
-    {
-        //空布局
+    public void vis() {
+        // 绝对布局
         container.setLayout(null);
-        //背景色
+        // 背景色
         container.setBackground(Color.white);
-        //主窗口是否可视化
+        // 主窗口是否可视化
         register_jf.setVisible(true);
-        //设置在屏幕中间弹出
+        // 设置在屏幕中间弹出
         register_jf.setLocation(500, 300);
-        //主窗口大小
+        // 主窗口大小
         register_jf.setSize(420, 400);
         System.out.println("注册窗口构建成功!");
-        //退出方式
-
+        // 退出方式
         register_jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 }
